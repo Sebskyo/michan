@@ -1,31 +1,23 @@
 $(document).ready(function() {
 	var form = document.createElement("form");
 	var username = document.createElement("input");
-	var name = document.createElement("input");
 	var password = document.createElement("input");
 	var button = document.createElement("button");
 
 	form.onsubmit = function() {
-		var data = {
-			username: username.value,
-			name: name.value,
-			password: password.value
-		};
-		$.post("/api/users", data, function() {
+		var data = {password: password.value};
+		$.post("/api/users/"+username.value, data, function() {
 			window.location.assign("http://localhost:3000/users");
 		});
 		return false;
 	};
 	username.type = "text";
-	name.type = "text";
 	password.type = "password";
 	button.type = "submit";
 
-	$(button).append("SIGN UP");
+	$(button).append("LOGIN");
 	$(form).append("Username: <br>");
 	$(form).append(username);
-	$(form).append("<br>IRL Name: <br>");
-	$(form).append(name);
 	$(form).append("<br>Password: <br>");
 	$(form).append(password);
 	$(form).append("<br>");

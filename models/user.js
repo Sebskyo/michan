@@ -29,6 +29,23 @@ exports.readAll = function(cb) {
 			cb(err);
 	});
 };
+exports.pwVerify = function(data, cb) {
+	var user = data.user;
+	var password = data.password;
+	conn.query("select password from users where username='"+user+"'", function(err, rows) {
+		if(!err) {
+			var stored = rows[0].password;
+			if(hash.verify(password, stored)) cb(null);
+			else cb(err);
+		}
+	});
+};
+exports.getID = function(user, cb) {
+	conn.query("select id from users where username='"+user+"'", function(err, rows) {
+		if(!err) cb(null, rows[0].id);
+		else cb(err);
+	});
+};
 
 exports.update = function(data, cb) {
 	var id = data.id;
