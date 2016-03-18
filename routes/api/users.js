@@ -5,7 +5,7 @@ var model = require("../../models/user");
 // GET all users (id, username, name)
 router.get("/", function (req, res) {
 	model.readAll(function (err, data) {
-		if (!err) res.send(data);
+		if (!err) res.send({you: req.session.user, data: data});
 		else res.send("err");
 	});
 });

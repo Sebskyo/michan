@@ -4,6 +4,10 @@ $(document).ready(function() {
 	var password = document.createElement("input");
 	var button = document.createElement("button");
 
+	username.type = "text";
+	password.type = "password";
+	button.type = "submit";
+
 	form.onsubmit = function() {
 		var data = {password: password.value};
 		$.post("/api/users/"+username.value, data, function() {
@@ -11,9 +15,6 @@ $(document).ready(function() {
 		});
 		return false;
 	};
-	username.type = "text";
-	password.type = "password";
-	button.type = "submit";
 
 	$(button).append("LOGIN");
 	$(form).append("Username: <br>");

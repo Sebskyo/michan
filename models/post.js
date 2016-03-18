@@ -14,7 +14,6 @@ exports.create = function(data, cb) {
 	var anon = data.anon;
 	var date = data.date;
 	var sql = "insert into posts (thread_id, user_id, subject, content, image, anon, date) values ("+thread+","+user+","+subject+","+content+","+image+","+anon+","+date+")";
-	console.log(sql + " ||| " + thread);
 
 	if(thread) {
 		conn.query(sql, function(err, rows) {
@@ -22,13 +21,11 @@ exports.create = function(data, cb) {
 			else cb(err);
 		});
 	}
-	else {
+	else if(user) {
 		conn.query("insert into threads (id) values (null)", function(err, rows) {
 			if(!err) {
 				thread = rows.insertId;
-				console.log(thread);
 				sql = sql.replace(/(?:\()null/, "("+thread);
-				console.log(sql);
 				conn.query(sql, function (err, rows) {
 					if (!err) cb(null, rows.insertId);
 					else cb(err);
@@ -36,6 +33,9 @@ exports.create = function(data, cb) {
 			}
 			else cb(err);
 		});
+	}
+	else {
+		cb(1);
 	}
 };
 
