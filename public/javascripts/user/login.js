@@ -11,7 +11,7 @@ $(document).ready(function() {
 	form.onsubmit = function() {
 		var data = {password: password.value};
 		$.post("/api/users/"+username.value, data, function() {
-			window.location.assign("http://localhost:3000/users");
+			window.location.assign("/users");
 		});
 		return false;
 	};

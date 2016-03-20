@@ -33,7 +33,7 @@ router.post("/", function(req, res) {
 
 	model.create(data, function(err, data) {
 		if(!err) res.send(""+data+"");
-		else res.send(err);
+		else res.send(""+err+"");
 	});
 });
 

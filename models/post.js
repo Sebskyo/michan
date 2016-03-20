@@ -15,7 +15,7 @@ exports.create = function(data, cb) {
 	var date = data.date;
 	var sql = "insert into posts (thread_id, user_id, subject, content, image, anon, date) values ("+thread+","+user+","+subject+","+content+","+image+","+anon+","+date+")";
 
-	if(thread) {
+	if(thread && user) {
 		conn.query(sql, function(err, rows) {
 			if(!err) cb(null, rows.insertId);
 			else cb(err);
@@ -46,8 +46,13 @@ exports.read = function(cb) {
 	})
 };
 exports.readThread = function(id, cb) {
-	conn.query("select * from posts where thread_id="+id, function(err, rows) {
-		if(!err) cb(null, rows);
+	conn.query("select posts.id, posts.user_id, posts.subject, posts.content, posts.anon, posts.date, users.username from posts inner join users on posts.user_id=users.id where thread_id="+id+" order by posts.id", function(err, rows) {
+		if(!err) {
+			for(var i = 0; i < rows.length; i++) {
+				rows[i].username = rows[i].anon == 1 ? "Anonymous" : rows[i].username;
+			}
+			cb(null, rows);
+		}
 		else cb(err);
 	});
 };

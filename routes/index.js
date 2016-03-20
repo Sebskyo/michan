@@ -6,7 +6,7 @@ var catalogue = require("./catalogue");
 var threads = require("./threads");
 
 router.get("/", function(req, res, next) {
-	res.render("index", { title: "Express" });
+	res.render("index");
 });
 
 router.use("/users", users);

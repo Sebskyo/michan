@@ -12,7 +12,7 @@ $(document).ready(function() {
 			password: password.value
 		};
 		$.post("/api/users", data, function() {
-			window.location.assign("http://localhost:3000/users/login");
+			window.location.assign("/users/login");
 		});
 		return false;
 	};

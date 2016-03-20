@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	$("#page").append("<a href='/'>&lt; back</a>");
+
 	var form = document.createElement("form");
 	var subject = document.createElement("input");
 	var content = document.createElement("textarea");
@@ -21,7 +23,7 @@ $(document).ready(function() {
 			anon: anon.checked
 		};
 		$.post("/api/posts", data, function() {
-			window.location.assign("http://localhost:3000/catalogue");
+			window.location.assign("/catalogue");
 		});
 		return false;
 	};
@@ -38,10 +40,13 @@ $(document).ready(function() {
 
 	$.get("/api/threads", function(data) {
 		var list = document.createElement("ul");
-		var point;
+		var point, link;
 		for(var i = 0; i < data.length; i++) {
 			point = document.createElement("li");
-			point.innerHTML = "id:"+data[i]["id"];
+			link = document.createElement("a");
+			link.href = "/thread/"+data[i].id;
+			link.innerHTML = "id:"+data[i].id;
+			$(point).append(link);
 			$(list).append(point);
 		}
 		$("#page").append(list);

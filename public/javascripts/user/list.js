@@ -1,10 +1,17 @@
 $(document).ready(function() {
+	$("#page").append("<a href='/'>&lt; back</a> | ");
+
 	$.get("/api/users", function(data) {
 		if(data.you) {
+			$("#page").append("<a href='/users/logout'>logout</a>");
 			var you = data.you;
 			var status = document.createElement("p");
 			status.innerHTML = "Logged in as: "+you;
 			$("#page").append(status);
+		}
+		else {
+			$("#page").append("<a href='/users/login'>login</a> | ");
+			$("#page").append("<a href='/users/signup'>signup</a>");
 		}
 
 		data = data.data;
