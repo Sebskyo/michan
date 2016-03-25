@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 	form.onsubmit = function() {
 		var data = {
-			username: username.value,
+			username: username.value.toLowerCase(),
 			name: name.value,
 			password: password.value
 		};

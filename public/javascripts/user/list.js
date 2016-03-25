@@ -20,9 +20,18 @@ $(document).ready(function() {
 		for(var i = 0; i < data.length; i++) {
 			console.log(i);
 			point = document.createElement("li");
-			point.innerHTML = "id:"+data[i]["id"]+", username:\""+data[i]["username"]+"\", name:\""+data[i]["name"]+"\"";
+			point.innerHTML = "id:"+data[i].id+", username:\""+esc(data[i].username)+"\", name:\""+esc(data[i].name)+"\"";
 			$(list).append(point);
 		}
 		$("#page").append(list);
 	});
 });
+
+function esc(str) {
+	return str
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;");
+}

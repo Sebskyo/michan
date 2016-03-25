@@ -52,3 +52,13 @@ $(document).ready(function() {
 		$("#page").append(list);
 	});
 });
+
+function esc(str) {
+	return str
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;")
+		.replace(/\r?\n/, "<br>");
+}

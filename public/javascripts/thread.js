@@ -17,6 +17,7 @@ $(document).ready(function() {
 	content.form = "post";
 	content.cols = 68;
 	content.rows = 3;
+	content.wrap = "hard";
 
 	form.onsubmit = function() {
 		var data = {
@@ -60,13 +61,13 @@ function refresh(postdiv) {
 
 			var user = document.createElement("span");
 			user.className = "user";
-			user.innerHTML = data[i].username;
+			user.innerHTML = esc(data[i].username);
 			$(div).append(user);
 
 			var subject = data[i].subject ? document.createElement("span") : null;
 			if(subject) {
 				subject.className = "subject";
-				subject.innerHTML = data[i].subject;
+				subject.innerHTML = esc(data[i].subject);
 				$(div).append(" | ");
 				$(div).append(subject);
 			}
@@ -80,9 +81,42 @@ function refresh(postdiv) {
 			$(div).append(" | ");
 			$(div).append(idlink);
 
-			$(div).append("<br>" + data[i].content);
+			$(div).append("<br>" + newl(lnk(grn(esc(data[i].content)))));
 
 			$(postdiv).append(div);
 		}
 	});
+}
+
+function esc(str) {
+	return str
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;");
+}
+function grn(str) {
+	var arr = str.match(/^&gt;[^&gt;].*$/gm);
+	if(arr) {
+		for(var i in arr) {
+			var tmp = "<span class='green'>"+arr[i]+"</span>";
+			str = str.replace(arr[i], tmp);
+		}
+	}
+	return str;
+}
+function lnk(str) {
+	var arr = str.match(/&gt;&gt;[^&gt;]\d+/gm);
+	if(arr) {
+		for(var i in arr) {
+			var tmp = arr[i].substr(8);
+			tmp = "<a class='quote' href='#"+tmp+"'>"+arr[i]+"</a>";
+			str = str.replace(arr[i], tmp);
+		}
+	}
+	return str;
+}
+function newl(str) {
+	return str.replace(/\r?\n/gm, "<br>");
 }
