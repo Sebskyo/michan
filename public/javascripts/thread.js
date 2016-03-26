@@ -15,6 +15,7 @@ $(document).ready(function() {
 	button.type = "submit";
 
 	content.form = "post";
+	content.id = "area";
 	content.cols = 68;
 	content.rows = 3;
 	content.wrap = "hard";
@@ -43,6 +44,7 @@ $(document).ready(function() {
 	$("#page").append(content);
 
 	var postdiv = document.createElement("div");
+	postdiv.id = "postlist";
 	$("#page").append(postdiv);
 
 	refresh(postdiv);
@@ -77,9 +79,15 @@ function refresh(postdiv) {
 			var idlink = document.createElement("a");
 			idlink.className = "idlink";
 			idlink.href = "#"+data[i].id;
-			idlink.innerHTML = "no. " + data[i].id;
+			var replylink = document.createElement("a");
+			replylink.className = "idlink";
+			replylink.href = "javascript:insertLnk("+data[i].id+");";
+			idlink.innerHTML = "no.";
+			replylink.innerHTML = data[i].id;
 			$(div).append(" | ");
 			$(div).append(idlink);
+			$(div).append(" ");
+			$(div).append(replylink);
 
 			$(div).append("<br>" + newl(lnk(grn(esc(data[i].content)))));
 
@@ -88,6 +96,7 @@ function refresh(postdiv) {
 	});
 }
 
+// Functions for escaping and converting to quotes, links, etc.
 function esc(str) {
 	return str
 		.replace(/&/g, "&amp;")
@@ -98,7 +107,6 @@ function esc(str) {
 }
 function grn(str) {
 	var arr = str.match(/^(?!&gt;&gt;)&gt;(.*)$/gm);
-	console.log(arr);
 	if(arr) {
 		for(var i in arr) {
 			var tmp = "<span class='green'>"+arr[i]+"</span>";
@@ -120,4 +128,8 @@ function lnk(str) {
 }
 function newl(str) {
 	return str.replace(/\r?\n/gm, "<br>");
+}
+
+function insertLnk(id) {
+	document.getElementById("area").value += ">>"+id+" ";
 }

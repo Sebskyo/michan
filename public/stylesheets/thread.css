@@ -1,6 +1,9 @@
 body {
 	background-color: #adbce6;
 }
+#postlist {
+	margin-top: 16px;
+}
 .post {
 	background-color: #99ace0;
 	width: 1024px;
