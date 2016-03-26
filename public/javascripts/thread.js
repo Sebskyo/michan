@@ -97,7 +97,8 @@ function esc(str) {
 		.replace(/'/g, "&apos;");
 }
 function grn(str) {
-	var arr = str.match(/^&gt;[^&gt;].*$/gm);
+	var arr = str.match(/^(?!&gt;&gt;)&gt;(.*)$/gm);
+	console.log(arr);
 	if(arr) {
 		for(var i in arr) {
 			var tmp = "<span class='green'>"+arr[i]+"</span>";
@@ -107,7 +108,7 @@ function grn(str) {
 	return str;
 }
 function lnk(str) {
-	var arr = str.match(/&gt;&gt;[^&gt;]\d+/gm);
+	var arr = str.match(/&gt;&gt;\d+/gm);
 	if(arr) {
 		for(var i in arr) {
 			var tmp = arr[i].substr(8);

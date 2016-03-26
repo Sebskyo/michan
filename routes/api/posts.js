@@ -22,7 +22,7 @@ router.post("/", function(req, res) {
 		"thread_id":req.body.thread_id,
 		"user_id":req.session.id,
 		"subject":req.body.subject,
-		"content":req.body.content.trim(),
+		"content":req.body.content.trim().replace(/\n+/g, "\n"),
 		"image":null,
 		"anon":req.body.anon,
 		"date":"'"+new Date().toISOString().slice(0, 19).replace("T", " ")+"'"
