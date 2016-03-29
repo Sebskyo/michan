@@ -1,17 +1,19 @@
 var thread_id = parseInt(/\/[0-9]+/.exec(window.location.pathname)[0].substr(1), 10);
 $(document).ready(function() {
-
 	$("#page").append("<a href='/catalogue'>&lt; back</a>");
 
 	var form = document.createElement("form");
 	var subject = document.createElement("input");
 	var content = document.createElement("textarea");
 	var anon = document.createElement("input");
+	var img = document.createElement("input");
 	var button = document.createElement("button");
 
 	form.name = "post";
 	subject.type = "text";
 	anon.type = "checkbox";
+	img.type = "file";
+	img.name = "img_upload";
 	button.type = "submit";
 
 	content.form = "post";
@@ -21,14 +23,26 @@ $(document).ready(function() {
 	content.wrap = "hard";
 
 	form.onsubmit = function() {
-		var data = {
-			thread_id: thread_id,
-			subject: subject.value,
-			content: content.value,
-			anon: anon.checked
-		};
-		$.post("/api/posts", data, function() {
-			window.location.assign("/thread/"+thread_id);
+		var data = new FormData();
+		data.append("thread_id", thread_id);
+		data.append("subject", subject.value);
+		data.append("content", content.value);
+		data.append("anon", anon.checked);
+		if(img.files[0] != undefined) {
+			data.append("image", img.files[0]);
+		}
+		$.ajax({
+			url:"/api/posts",
+			type:"POST",
+			data:data,
+			processData:false,
+			contentType:false,
+			success:function() {
+				window.location.assign("/thread/"+thread_id);
+			},
+			error:function() {
+				console.log("Error uploading data to server.");
+			}
 		});
 		return false;
 	};
@@ -39,6 +53,7 @@ $(document).ready(function() {
 	$(form).append(anon);
 	$(form).append("Post anonymously?");
 	$(form).append(button);
+	$(form).append(img);
 
 	$("#page").append(form);
 	$("#page").append(content);
@@ -88,6 +103,17 @@ function refresh(postdiv) {
 			$(div).append(idlink);
 			$(div).append(" ");
 			$(div).append(replylink);
+
+			if(data[i].image) {
+				var link = document.createElement("a");
+				var img = document.createElement("img");
+				link.target="_blank";
+				img.src = link.href = "/images/" + data[i].image;
+				img.width = 256;
+				$(div).append("<br>");
+				$(link).append(img);
+				$(div).append(link);
+			}
 
 			$(div).append("<br>" + newl(lnk(grn(esc(data[i].content)))));
 

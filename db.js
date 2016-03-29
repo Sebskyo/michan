@@ -1,9 +1,6 @@
 var sql = require("mysql2");
-var conn = sql.createConnection({
-	host:"localhost",
-	user:"root",
-	password:"testo",
-	database:"michan"
-});
+var conf = require("./conf");
+
+var conn = sql.createConnection(conf.db);
 
 module.exports = conn;

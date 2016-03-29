@@ -5,25 +5,41 @@ $(document).ready(function() {
 	var subject = document.createElement("input");
 	var content = document.createElement("textarea");
 	var anon = document.createElement("input");
+	var img = document.createElement("input");
 	var button = document.createElement("button");
 
 	form.name = "post";
 	subject.type = "text";
 	anon.type = "checkbox";
+	img.type = "file";
+	img.name = "img_upload";
 	button.type = "submit";
 
 	content.form = "post";
+	content.id = "area";
 	content.cols = 68;
 	content.rows = 3;
+	content.wrap = "hard";
 
 	form.onsubmit = function() {
-		var data = {
-			subject: subject.value,
-			content: content.value,
-			anon: anon.checked
-		};
-		$.post("/api/posts", data, function() {
-			window.location.assign("/catalogue");
+		var data = new FormData();
+		data.append("subject", subject.value);
+		data.append("content", content.value);
+		data.append("anon", anon.checked);
+		data.append("image", img.files[0]);
+		console.log(data);
+		$.ajax({
+			url:"/api/posts",
+			type:"POST",
+			data:data,
+			processData:false,
+			contentType:false,
+			success:function() {
+				window.location.assign("/catalogue");
+			},
+			error:function() {
+				console.log("Error uploading data to server.");
+			}
 		});
 		return false;
 	};
@@ -34,6 +50,7 @@ $(document).ready(function() {
 	$(form).append(anon);
 	$(form).append("Post anonymously?");
 	$(form).append(button);
+	$(form).append(img);
 
 	$("#page").append(form);
 	$("#page").append(content);

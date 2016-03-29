@@ -1,3 +1,4 @@
 .idea
 node_modules/*
 public/images/*
+conf.js #config template will become available

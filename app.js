@@ -5,6 +5,8 @@ var logger = require("morgan");
 var cookieParser = require("cookie-parser");
 var cookieSession = require("cookie-session");
 var bodyParser = require("body-parser");
+var multer = require("multer");
+var upload = multer({dest:"./public/images/"});
 
 var routes = require("./routes/index");
 var api = require("./routes/api/api");

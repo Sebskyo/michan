@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var model = require("../../models/thread");
+var multer = require("multer");
 
 // GET a list of threads (id, last_active)
 router.get("/", function(req, res) {

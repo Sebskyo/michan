@@ -25,6 +25,7 @@ router.post("/", function (req, res) {
 	})
 });
 router.post("/:user", function (req, res) {
+	console.log(req.body);
 	model.getID(req.params.user, function (err, data) {
 		if (!err)
 			model.pwVerify({user: req.params.user, password: req.body.password}, function (err) {

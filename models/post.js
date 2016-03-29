@@ -46,7 +46,7 @@ exports.read = function(cb) {
 	})
 };
 exports.readThread = function(id, cb) {
-	conn.query("select posts.id, posts.user_id, posts.subject, posts.content, posts.anon, posts.date, users.username from posts inner join users on posts.user_id=users.id where thread_id="+id+" order by posts.id", function(err, rows) {
+	conn.query("select posts.id, posts.user_id, posts.subject, posts.content, posts.image, posts.anon, posts.date, users.username from posts inner join users on posts.user_id=users.id where thread_id="+id+" order by posts.id", function(err, rows) {
 		if(!err) {
 			for(var i = 0; i < rows.length; i++) {
 				rows[i].username = rows[i].anon == 1 ? "Anonymous" : rows[i].username;
