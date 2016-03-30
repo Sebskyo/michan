@@ -28,23 +28,18 @@ router.get("/:thread_id", function(req, res) {
 });
 // POST data to create a new post linked to a thread (thread_id, user_id, subject, content, )
 router.post("/", upload.single("image"), function(req, res) {
-	console.log(req.body);
-	console.log(req.file);
 	var data = {
 		"thread_id":req.body.thread_id,
 		"user_id":req.session.id,
 		"subject":req.body.subject,
 		"content":req.body.content.trim().replace(/\n+/g, "\n"),
 		"image":null,
-		"anon":req.body.anon,
-		"date":"'"+new Date().toISOString().slice(0, 19).replace("T", " ")+"'"
+		"anon":req.body.anon
 	};
-	console.log(data.image);
 	data.subject = data.subject == "" ? null : data.subject;
 	data.thread_id = data.thread_id == undefined || "" ? null : data.thread_id;
 	data.image = req.file == undefined ? null : req.file.filename;
 	data.anon = data.anon == "true" ? 1 : 0;
-	console.log(data.image);
 
 	model.create(data, function(err, data) {
 		if(!err) res.send(""+data+"");

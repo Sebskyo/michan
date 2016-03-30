@@ -1,5 +1,6 @@
 var express = require("express");
 var conn = require("../db");
+var offset = new Date().getTimezoneOffset()*60000;
 
 exports.create = function(data, cb) {
 	var thread = data.thread_id;
@@ -12,7 +13,9 @@ exports.create = function(data, cb) {
 	if (image)
 		image = '"'+image+'"';
 	var anon = data.anon;
-	var date = data.date;
+	console.log("trying date thing");
+	var date = "'"+new Date(Date.now()-offset).toISOString().slice(0, 19).replace("T"," ")+"'";
+	console.log(date);
 	var sql = "insert into posts (thread_id, user_id, subject, content, image, anon, date) values ("+thread+","+user+","+subject+","+content+","+image+","+anon+","+date+")";
 
 	if(thread && user) {
@@ -49,6 +52,7 @@ exports.readThread = function(id, cb) {
 	conn.query("select posts.id, posts.user_id, posts.subject, posts.content, posts.image, posts.anon, posts.date, users.username from posts inner join users on posts.user_id=users.id where thread_id="+id+" order by posts.id", function(err, rows) {
 		if(!err) {
 			for(var i = 0; i < rows.length; i++) {
+				rows[i].date = new Date(rows[i].date.getTime() - offset).toISOString().slice(0, 19).replace("T", " ");
 				rows[i].username = rows[i].anon == 1 ? "Anonymous" : rows[i].username;
 			}
 			cb(null, rows);
