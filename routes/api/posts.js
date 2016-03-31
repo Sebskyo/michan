@@ -36,15 +36,17 @@ router.post("/", upload.single("image"), function(req, res) {
 		"image":null,
 		"anon":req.body.anon
 	};
-	data.subject = data.subject == "" ? null : data.subject;
-	data.thread_id = data.thread_id == undefined || "" ? null : data.thread_id;
-	data.image = req.file == undefined ? null : req.file.filename;
-	data.anon = data.anon == "true" ? 1 : 0;
+	if(data.content != "") {
+		data.thread_id = data.thread_id == undefined || "" ? null : data.thread_id;
+		data.subject = data.subject == "" ? null : data.subject;
+		data.image = req.file == undefined ? null : req.file.filename;
+		data.anon = data.anon == "true" ? 1 : 0;
 
-	model.create(data, function(err, data) {
-		if(!err) res.send(""+data+"");
-		else res.send(""+err+"");
-	});
+		model.create(data, function(err, data) {
+			if(!err) res.send(""+data+"");
+			else res.send(""+err+"");
+		});
+	}
 });
 
 module.exports = router;

@@ -11,7 +11,8 @@ body {
 }
 .user {
 	font-weight: bold;
-	color: green;
+	color: green !important;
+	text-decoration: none;
 }
 .subject {
 	font-weight: bold;

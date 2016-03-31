@@ -71,13 +71,16 @@ function refresh(postdiv) {
 		postdiv.innerHTML = "";
 		for(var i = 0; i < data.length; i++) {
 			var id = data[i].id;
+			if(data[i].user_id == 1)
+				data[i].username = data[i].username + " ## ADMIN";
 			data[i].date = data[i].date.slice(0, 19).replace("T", " ");
 			var div = document.createElement("div");
 			div.className = "post";
 			div.id = id;
 
-			var user = document.createElement("span");
+			var user = document.createElement("a");
 			user.className = "user";
+			user.href = "/users/"+data[i].user_id;
 			user.innerHTML = esc(data[i].username);
 			$(div).append(user);
 
@@ -115,7 +118,7 @@ function refresh(postdiv) {
 				$(div).append(link);
 			}
 
-			$(div).append("<br>" + newl(lnk(grn(esc(data[i].content)))));
+			$(div).append("<br>" + newl(hlnk(lnk(grn(esc(data[i].content))))));
 
 			$(postdiv).append(div);
 		}
@@ -147,6 +150,17 @@ function lnk(str) {
 		for(var i in arr) {
 			var tmp = arr[i].substr(8);
 			tmp = "<a class='quote' href='#"+tmp+"'>"+arr[i]+"</a>";
+			str = str.replace(arr[i], tmp);
+		}
+	}
+	return str;
+}
+function hlnk(str) {
+	var arr = str.match(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gm);
+	if(arr) {
+		for(var i in arr) {
+			var tmp = arr[i].replace("http:", "https:");
+			tmp = "<a href='"+tmp+"'>"+tmp+"</a>";
 			str = str.replace(arr[i], tmp);
 		}
 	}

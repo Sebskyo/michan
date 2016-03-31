@@ -12,7 +12,7 @@ exports.create = function(cb) {
 
 // TODO: add joining with posts for more info (image, subject)
 exports.read = function(id, cb) {
-	conn.query("select subject from posts where thread_id="+id+" limit 1", function(err, rows) {
+	conn.query("select subject, date, image from posts", function(err, rows) {
 		if(!err)
 			cb(null, rows);
 		else

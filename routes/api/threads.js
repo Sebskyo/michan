@@ -24,12 +24,5 @@ router.post("/", function(req, res) {
 		else res.send(err);
 	});
 });
-// DELETE a thread (id)
-router.delete("/:id", function(req, res) {
-	model.delete(req.params.id, function(err) {
-		if(!err) res.send("Thread deleted");
-		else res.send("err");
-	})
-});
 
 module.exports = router;

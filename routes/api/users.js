@@ -25,7 +25,6 @@ router.post("/", function (req, res) {
 	})
 });
 router.post("/:user", function (req, res) {
-	console.log(req.body);
 	model.getID(req.params.user, function (err, data) {
 		if (!err)
 			model.pwVerify({user: req.params.user, password: req.body.password}, function (err) {
@@ -53,14 +52,16 @@ router.put("/:id", function (req, res) {
 });
 // DELETE a user
 router.delete("/", function (req, res) {
-	model.delete(req.session.id, function (err) {
-		if (!err) {
-			req.session.id=null;
-			req.session.user=null;
-			res.send("success!");
-		}
-		else res.send("err");
-	});
+	if(req.session.id) {
+		model.delete(req.session.id, function (err) {
+			if (!err) {
+				req.session.id=null;
+				req.session.user=null;
+				res.send("success!");
+			}
+			else res.send("err");
+		});
+	}
 });
 
 module.exports = router;

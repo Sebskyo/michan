@@ -74,10 +74,12 @@ exports.update = function(data, cb) {
 };
 
 exports.delete = function(id, cb) {
-	conn.query("delete from users where id="+id, function(err) {
+	conn.query("update set user_id=3 where user_id="+id, function(err) {
 		if(!err)
-			cb(null);
-		else
-			cb(err);
+			conn.query("delete from users where id="+id, function(err) {
+				if(!err) cb(null);
+				else cb(err);
+		});
+		else cb(err);
 	});
 };
