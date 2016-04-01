@@ -42,7 +42,7 @@ exports.pwVerify = function(data, cb) {
 };
 exports.getID = function(user, cb) {
 	conn.query("select id from users where username='"+user+"'", function(err, rows) {
-		if(!err) cb(null, rows[0].id);
+		if(!err && rows[0].id) cb(null, rows[0].id);
 		else cb(err);
 	});
 };

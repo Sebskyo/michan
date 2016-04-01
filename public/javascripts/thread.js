@@ -16,10 +16,9 @@ $(document).ready(function() {
 	img.name = "img_upload";
 	button.type = "submit";
 
-	content.form = "post";
 	content.id = "area";
-	content.cols = 68;
-	content.rows = 3;
+	content.cols = 100;
+	content.rows = 5;
 	content.wrap = "hard";
 
 	form.onsubmit = function() {
@@ -49,14 +48,14 @@ $(document).ready(function() {
 
 	$(button).append("POST");
 	$(form).append("Subject: ");
-	$(form).append(subject);
+	$(form).append(subject);// $(form).append("<br>");
 	$(form).append(anon);
-	$(form).append("Post anonymously?");
+	$(form).append("Post anonymously? ");// $(form).append("<br>");
+	$(form).append(img); $(form).append("<br>");
+	$(form).append(content); $(form).append("<br>");
 	$(form).append(button);
-	$(form).append(img);
 
 	$("#page").append(form);
-	$("#page").append(content);
 
 	var postdiv = document.createElement("div");
 	postdiv.id = "postlist";
@@ -78,21 +77,24 @@ function refresh(postdiv) {
 			div.className = "post";
 			div.id = id;
 
+			var infodiv = document.createElement("div");
+			infodiv.className = "info";
+
 			var user = document.createElement("a");
 			user.className = "user";
 			user.href = "/users/"+data[i].user_id;
 			user.innerHTML = esc(data[i].username);
-			$(div).append(user);
+			$(infodiv).append(user);
 
 			var subject = data[i].subject ? document.createElement("span") : null;
 			if(subject) {
 				subject.className = "subject";
 				subject.innerHTML = esc(data[i].subject);
-				$(div).append(" | ");
-				$(div).append(subject);
+				$(infodiv).append(" | ");
+				$(infodiv).append(subject);
 			}
 
-			$(div).append(" | " + data[i].date);
+			$(infodiv).append(" | " + data[i].date);
 
 			var idlink = document.createElement("a");
 			idlink.className = "idlink";
@@ -102,10 +104,12 @@ function refresh(postdiv) {
 			replylink.href = "javascript:insertLnk("+data[i].id+");";
 			idlink.innerHTML = "no.";
 			replylink.innerHTML = data[i].id;
-			$(div).append(" | ");
-			$(div).append(idlink);
-			$(div).append(" ");
-			$(div).append(replylink);
+			$(infodiv).append(" | ");
+			$(infodiv).append(idlink);
+			$(infodiv).append(" ");
+			$(infodiv).append(replylink);
+
+			$(div).append(infodiv);
 
 			if(data[i].image) {
 				var link = document.createElement("a");
@@ -113,12 +117,11 @@ function refresh(postdiv) {
 				link.target="_blank";
 				img.src = link.href = "/images/" + data[i].image;
 				img.width = 256;
-				$(div).append("<br>");
 				$(link).append(img);
 				$(div).append(link);
 			}
 
-			$(div).append("<br>" + newl(hlnk(lnk(grn(esc(data[i].content))))));
+			$(div).append(newl(hlnk(lnk(grn(esc(data[i].content))))));
 
 			$(postdiv).append(div);
 		}
@@ -156,7 +159,7 @@ function lnk(str) {
 	return str;
 }
 function hlnk(str) {
-	var arr = str.match(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gm);
+	var arr = str.match(/^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/gm);
 	if(arr) {
 		for(var i in arr) {
 			var tmp = arr[i].replace("http:", "https:");

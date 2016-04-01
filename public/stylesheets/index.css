@@ -1,0 +1,34 @@
+@font-face {
+	font-family: font;
+	src: url(/font.tff);
+}
+body {
+	background-color: #f3f3f3;
+}
+#page {
+	width: 25%;
+	margin: auto;
+}
+
+#container {
+	margin: auto;
+	background-color: red;
+}
+.button {
+	float: left;
+	width: 212px;
+	height: 212px;
+	line-height: 212px;
+	margin: 2.5%;
+	text-align: center;
+	background-color: #fdfdfd;
+	transition: background-color 0.4s;
+}
+.button:hover {
+	background-color: #e9e9e9;
+}
+a, a:visited {
+	color: black;
+	font-size: 28px;
+	font-family: font;
+}
