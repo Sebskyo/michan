@@ -152,7 +152,8 @@ function lnk(str) {
 	if(arr) {
 		for(var i in arr) {
 			var tmp = arr[i].substr(8);
-			tmp = "<a class='quote' href='#"+tmp+"'>"+arr[i]+"</a>";
+			var id = arr[i].replace("&gt;&gt;", "");
+			tmp = "<a class='quote' onmouseenter='focuspost("+id+")' onmouseleave='unfocuspost("+id+")' href='#"+tmp+"'>"+arr[i]+"</a>";
 			str = str.replace(arr[i], tmp);
 		}
 	}
@@ -175,4 +176,10 @@ function newl(str) {
 
 function insertLnk(id) {
 	document.getElementById("area").value += ">>"+id+" ";
+}
+function focuspost(id) {
+	document.getElementById(id).className = "post focussed";
+}
+function unfocuspost(id) {
+	document.getElementById(id).className = "post";
 }
