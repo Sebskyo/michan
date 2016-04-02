@@ -4,31 +4,39 @@
 }
 body {
 	background-color: #f3f3f3;
+	color: #333;
 }
 #page {
 	width: 25%;
 	margin: auto;
 }
 
+#logo {
+	width: 300px;
+	height: 300px;
+	margin: 0 auto;
+}
+
 #container {
+	width: 472px;
+	height: 472px;
 	margin: auto;
-	background-color: red;
 }
 .button {
 	float: left;
-	width: 212px;
-	height: 212px;
+	width: 45%;
+	height: auto;
 	line-height: 212px;
 	margin: 2.5%;
 	text-align: center;
-	background-color: #fdfdfd;
+	background-color: #e9e9e9;
 	transition: background-color 0.4s;
 }
 .button:hover {
-	background-color: #e9e9e9;
+	background-color: #fdfdfd;
 }
 a, a:visited {
-	color: black;
+	color: #333;
 	font-size: 28px;
 	font-family: font;
 }

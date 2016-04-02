@@ -12,7 +12,11 @@ router.get("/", function (req, res) {
 // GET specific user data (id, username, name, # of posts, # of threads)
 router.get("/:id", function (req, res) {
 	model.read(req.params.id, function (err, data) {
-		if (!err) res.send(data);
+		var session = req.session.id ? true : false;
+		if (!err) {
+			data.session = session;
+			res.send(data);
+		}
 		else res.send("err");
 	});
 });
@@ -39,16 +43,17 @@ router.post("/:user", function (req, res) {
 	});
 });
 // PUT new data into a specific user (username, name, password)
-router.put("/:id", function (req, res) {
-	model.update({
-		id: req.params.id,
-		username: req.body.username,
-		name: req.body.name,
-		password: req.body.password
-	}, function (err) {
-		if (!err) res.send("success!");
-		else res.send("err");
-	});
+router.put("/", function (req, res) {
+	if(req.session.id) {
+		model.update({
+			id: req.session.id,
+			username: req.body.username,
+			password: req.body.password
+		}, function (err) {
+			if (!err) res.send("success!");
+			else res.send("err");
+		});
+	}
 });
 // DELETE a user
 router.delete("/", function (req, res) {

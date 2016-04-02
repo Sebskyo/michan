@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	$("#page").append("<a class='navlink' href='/users'>&lt;</a>");
+
 	var form = document.createElement("form");
 	var username = document.createElement("input");
 	var name = document.createElement("input");
@@ -22,11 +24,11 @@ $(document).ready(function() {
 	button.type = "submit";
 
 	$(button).append("SIGN UP");
-	$(form).append("Username: <br>");
+	$(form).append("username<br>");
 	$(form).append(username);
-	$(form).append("<br>IRL Name: <br>");
+	$(form).append("<br>irl name<br>");
 	$(form).append(name);
-	$(form).append("<br>Password: <br>");
+	$(form).append("<br>password<br>");
 	$(form).append(password);
 	$(form).append("<br>");
 	$(form).append(button);

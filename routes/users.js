@@ -23,7 +23,7 @@ router.get("/logout", function(req, res) {
 });
 
 router.get("/:id", function(req, res) {
-	res.status(501).send("501 bitch: haha dicks this aint done");
+	res.render("user/profile", {title:conf.prefix+conf.profile});
 });
 
 module.exports = router;

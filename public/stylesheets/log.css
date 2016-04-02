@@ -1,0 +1,25 @@
+@font-face {
+	font-family: font;
+	src: url(/font.tff);
+}
+body {
+	background-color: #f3f3f3;
+	font-family: font;
+	font-size: 16px;
+	color: #333;
+}
+#page {
+	width: 187px;
+	margin: auto;
+}
+form {
+	display: inline-block;
+	text-align: center;
+}
+a, a:visited {
+	color: #333;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}

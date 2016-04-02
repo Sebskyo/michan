@@ -1,8 +1,6 @@
 $(document).ready(function() {
-	/*$("#page").append("<a href='/catalogue'>catalogue</a>");
-	$("#page").append(" | ");
-	$("#page").append("<a href='/users'>users</a>");*/
 	var logo = document.createElement("div");
+	var logoimg = document.createElement("img");
 	var buttoncontainer = document.createElement("div");
 	var catlnk = document.createElement("a");
 	var usrlnk = document.createElement("a");
@@ -16,6 +14,10 @@ $(document).ready(function() {
 	logo.id = "logo";
 	buttoncontainer.id = "container";
 	cat.className = usr.className = faq.className = git.className = "button";
+
+	logoimg.src = "mi.png";
+
+	$(logo).append(logoimg);
 
 	catlnk.href = "/catalogue";
 	usrlnk.href = "/users";

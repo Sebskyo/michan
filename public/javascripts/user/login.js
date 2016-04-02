@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	$("#page").append("<a class='navlink' href='/users'>&lt;</a>");
+
 	var form = document.createElement("form");
 	var username = document.createElement("input");
 	var password = document.createElement("input");
@@ -17,9 +19,9 @@ $(document).ready(function() {
 	};
 
 	$(button).append("LOGIN");
-	$(form).append("Username: <br>");
+	$(form).append("username<br>");
 	$(form).append(username);
-	$(form).append("<br>Password: <br>");
+	$(form).append("<br>password<br>");
 	$(form).append(password);
 	$(form).append("<br>");
 	$(form).append(button);

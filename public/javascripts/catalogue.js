@@ -11,14 +11,14 @@ $(document).ready(function() {
 	form.name = "post";
 	subject.type = "text";
 	anon.type = "checkbox";
+	anon.checked = true;
 	img.type = "file";
 	img.name = "img_upload";
 	button.type = "submit";
 
-	content.form = "post";
 	content.id = "area";
-	content.cols = 68;
-	content.rows = 3;
+	content.cols = 100;
+	content.rows = 5;
 	content.wrap = "hard";
 
 	form.onsubmit = function() {
@@ -46,14 +46,14 @@ $(document).ready(function() {
 
 	$(button).append("POST");
 	$(form).append("Subject: ");
-	$(form).append(subject);
+	$(form).append(subject);// $(form).append("<br>");
 	$(form).append(anon);
-	$(form).append("Post anonymously?");
+	$(form).append("Post anonymously? ");// $(form).append("<br>");
+	$(form).append(img); $(form).append("<br>");
+	$(form).append(content); $(form).append("<br>");
 	$(form).append(button);
-	$(form).append(img);
 
 	$("#page").append(form);
-	$("#page").append(content);
 
 	$.get("/api/threads", function(data) {
 		var list = document.createElement("ul");

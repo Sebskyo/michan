@@ -1,0 +1,66 @@
+@font-face {
+	font-family: font;
+	src: url(/font.tff);
+}
+body {
+	background-color: #f3f3f3;
+	font-family: font;
+	font-size: 16px;
+	color: #333;
+}
+#page {
+	width: 40%;
+	margin: auto;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: #333
+}
+a:hover {
+	text-decoration: underline;
+}
+
+.menu {
+	width: 100%;
+	margin: 0 auto;
+}
+.menu-item {
+	float: left;
+	width: 45%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	margin-top: 16px;
+	margin-bottom: 16px;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	text-align: center;
+	font-size: 24px;
+	background-color: #f3f3f3;
+	color: #333;
+	transition: color 0.4s, background-color 0.4s;
+}
+.menu-item:hover {
+	background-color: #333;
+	color: #f3f3f3;
+}
+
+#userlist {
+	width: 95%;
+	margin: 0 auto;
+}
+
+.userdiv {
+	margin-top: 6px;
+}
+.userlink, .userlink:visited {
+	text-decoration: none;
+	background-color: #f3f3f3;
+	color: #333;
+	transition: color 0.25s, background-color 0.25s;
+}
+.userlink:hover {
+	text-decoration: none;
+	background-color: #333;
+	color: #f3f3f3;
+}
