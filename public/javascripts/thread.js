@@ -66,7 +66,14 @@ $(document).ready(function() {
 	refresh(postdiv);
 	setInterval(refresh, 60000, postdiv);
 
-	$("#page").append("<a class='navlink' href='#'>^ top</a>");
+	$("#page").append("<a class='navlink' id='totop' href='#'>^ top</a>");
+	$("#totop").on("click", function(e){
+		e.preventDefault();
+		var target= $("#page");
+		$("html, body").stop().animate({
+			scrollTop: target.offset().top
+		}, 1000);
+	});
 });
 
 function refresh(postdiv) {
