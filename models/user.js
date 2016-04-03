@@ -14,7 +14,7 @@ exports.create = function(data, cb) {
 
 exports.read = function(id, cb) {
 	conn.query("select id, username, name from users where id="+id, function(err, rows) {
-		if(!err && rows[0])
+		if(!err && rows[0] != undefined)
 			conn.query("select id from posts where user_id="+id, function(err, count) {
 				if(!err) {
 					var posts = count[0] ? count.length : 0;
@@ -24,7 +24,7 @@ exports.read = function(id, cb) {
 				}
 				else cb(err);
 			});
-		else cb(err);
+		else cb(true);
 	});
 };
 exports.readAll = function(cb) {

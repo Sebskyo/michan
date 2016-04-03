@@ -12,7 +12,7 @@ router.get("/", function (req, res) {
 // GET specific user data (id, username, name, # of posts, # of threads)
 router.get("/:id", function (req, res) {
 	model.read(req.params.id, function (err, data) {
-		var session = req.session.id ? true : false;
+		var session = req.session.user_id ? true : false;
 		if (!err) {
 			data.session = session;
 			res.send(data);
@@ -29,12 +29,13 @@ router.post("/", function (req, res) {
 	})
 });
 router.post("/:user", function (req, res) {
+	req.params.user = req.params.user.toLowerCase();
 	model.getID(req.params.user, function (err, data) {
 		if (!err)
 			model.pwVerify({user: req.params.user, password: req.body.password}, function (err) {
 				if (!err) {
 					req.session.user = req.params.user;
-					req.session.id = data;
+					req.session.user_id = data;
 					res.end("logged in");
 				}
 				else res.end("error occurred");
@@ -42,11 +43,13 @@ router.post("/:user", function (req, res) {
 		else res.end("error occurred");
 	});
 });
-// PUT new data into a specific user (username, name, password)
+
+// Not enough time to implement
+/*// PUT new data into a specific user (username, name, password)
 router.put("/", function (req, res) {
-	if(req.session.id) {
+	if(req.session.user_id) {
 		model.update({
-			id: req.session.id,
+			id: req.session.user_id,
 			username: req.body.username,
 			password: req.body.password
 		}, function (err) {
@@ -57,16 +60,17 @@ router.put("/", function (req, res) {
 });
 // DELETE a user
 router.delete("/", function (req, res) {
-	if(req.session.id) {
-		model.delete(req.session.id, function (err) {
+	if(req.session.user_id) {
+		model.delete(req.session.user_id, function (err) {
 			if (!err) {
-				req.session.id=null;
-				req.session.user=null;
+				req.session.user_id = null;
+				req.session.user = null;
 				res.send("success!");
 			}
 			else res.send("err");
 		});
 	}
 });
+*/
 
 module.exports = router;

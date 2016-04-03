@@ -11,6 +11,7 @@ var conf = {
 	titles:{
 		main:"MIchan!",
 		prefix:"MIchan | ",
+		faq:"FAQ",
 		catalogue:"Catalogue",
 		thread:"Thread",
 		users:"Users",

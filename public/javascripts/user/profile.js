@@ -1,13 +1,16 @@
 var reg, id;
 if(reg = /\/\d+/.exec(window.location.pathname)) {
+	console.log(reg);
 	id = parseInt(reg[0].substr(1), 10);
+	console.log(id);
 	if(id == NaN) window.location.assign("/users");
 }
+else window.location.assign("/users");
 
 $(document).ready(function() {
-	$("#page").append("<a class='navlink' href='/users'>&lt; back</a>");
+	$("#page").append("<a href='/users'>&lt; back</a>");
 	$.get("/api/users/"+id, function(data) {
-		if(data && data.id != 2 && data.id != 3) {
+		if(data.id && data.id != 2) {
 			var count = data.count;
 			var username = data.username;
 			var name = data.name;

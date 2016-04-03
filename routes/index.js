@@ -6,8 +6,11 @@ var users = require("./users");
 var catalogue = require("./catalogue");
 var threads = require("./threads");
 
-router.get("/", function(req, res, next) {
+router.get("/", function(req, res) {
 	res.render("index", {title:conf.main});
+});
+router.get("/faq", function(req, res) {
+	res.render("faq", {title:conf.faq});
 });
 
 router.use("/users", users);

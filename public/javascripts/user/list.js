@@ -49,7 +49,7 @@ $(document).ready(function() {
 		var list = document.createElement("div");
 		list.id = "userlist";
 		for(var i in data) {
-			if(data[i].id != 2 && data[i].id != 3) {
+			if(data[i].id != 2) {
 				var user = document.createElement("div");
 				var link = document.createElement("a");
 				user.className = "userdiv";
@@ -74,7 +74,7 @@ function esc(str) {
 }
 function findID(arr, usr) {
 	for(var i in arr) {
-		if(arr[i].username = usr) return arr[i].id;
+		if(arr[i].username == usr) return arr[i].id;
 	}
 	return false;
 }

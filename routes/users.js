@@ -17,8 +17,8 @@ router.get("/signup", function(req, res) {
 	else res.render("user/new", {title:conf.prefix+conf.signup});
 });
 router.get("/logout", function(req, res) {
+	req.session.user_id = null;
 	req.session.user = null;
-	req.session.id = null;
 	res.redirect("/users");
 });
 

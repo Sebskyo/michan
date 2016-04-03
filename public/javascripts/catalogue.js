@@ -46,25 +46,35 @@ $(document).ready(function() {
 
 	$(button).append("POST");
 	$(form).append("Subject: ");
-	$(form).append(subject);// $(form).append("<br>");
+	$(form).append(subject);
 	$(form).append(anon);
-	$(form).append("Post anonymously? ");// $(form).append("<br>");
+	$(form).append("Post anonymously? ");
 	$(form).append(img); $(form).append("<br>");
 	$(form).append(content); $(form).append("<br>");
 	$(form).append(button);
 
 	$("#page").append(form);
 
+	$("#page").append("<hr style='width: 1056px; float: left;'>");
+
 	$.get("/api/threads", function(data) {
-		var list = document.createElement("ul");
-		var point, link;
-		for(var i = 0; i < data.length; i++) {
-			point = document.createElement("li");
-			link = document.createElement("a");
+		var list = document.createElement("div");
+		list.id = "list";
+		for(var i in data) {
+			var link = document.createElement("a");
 			link.href = "/thread/"+data[i].id;
-			link.innerHTML = "id:"+data[i].id;
-			$(point).append(link);
-			$(list).append(point);
+			var thread = document.createElement("div");
+			thread.className = "thread";
+			var img = document.createElement("img");
+			var imgdiv = document.createElement("div");
+			imgdiv.className = "imgdiv";
+			img.src = "/images/"+data[i].image;
+			$(imgdiv).append(img);
+			$(thread).append(imgdiv);
+			//$(thread).append("<br>");
+			$(thread).append("<p>"+data[i].subject+"</p>");
+			$(link).append(thread);
+			$(list).append(link);
 		}
 		$("#page").append(list);
 	});

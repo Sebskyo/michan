@@ -7,10 +7,16 @@ var storage = multer.diskStorage({
 		cb(null, "./public/images");
 	},
 	filename: function(req, file, cb) {
-		cb(null, Math.floor(Date.now()/1000) + "." + file.mimetype.replace("image/", ""));
+		cb(null, Math.floor(Date.now()) + "." + file.mimetype.replace("image/", ""));
 	}
 });
-var upload = multer({storage: storage});
+var upload = multer({
+	storage: storage,
+	limits:{fileSize:5243000, files:1},
+	fileFilter:function(req, file, cb) {
+		if(file.mimetype.startsWith("image/")) cb(null, true);
+		else cb(null, false);
+	}});
 
 // GET all posts
 router.get("/", function(req, res) {
@@ -28,10 +34,10 @@ router.get("/:thread_id", function(req, res) {
 });
 // POST data to create a new post linked to a thread (thread_id, user_id, subject, content, )
 router.post("/", upload.single("image"), function(req, res) {
-	if(req.session.id) {
+	if(req.session.user_id) {
 		var data = {
 			"thread_id":req.body.thread_id,
-			"user_id":req.session.id,
+			"user_id":req.session.user_id,
 			"subject":req.body.subject,
 			"content":req.body.content.trim().replace(/\n+/g, "\n"),
 			"image":null,
@@ -43,10 +49,12 @@ router.post("/", upload.single("image"), function(req, res) {
 			data.image = req.file == undefined ? null : req.file.filename;
 			data.anon = data.anon == "true" ? 1 : 0;
 
-			model.create(data, function(err, data) {
-				if(!err) res.send(""+data+"");
-				else res.send(""+err+"");
-			});
+			if(!(data.thread_id == null && data.image == null))
+				model.create(data, function(err, data) {
+					if(!err) res.send(""+data+"");
+					else res.send(""+err+"");
+				});
+			else res.status(400).end("You cannot create a new thread without an image");
 		}
 		else {
 			res.status(400).end("No content");

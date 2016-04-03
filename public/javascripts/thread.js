@@ -57,7 +57,7 @@ $(document).ready(function() {
 	$(form).append(button);
 
 	$("#page").append(form);
-	$("#page").append("<hr style='width: 61%; float: left;'>");
+	$("#page").append("<hr style='width: 1056px; float: left;'>");
 
 	var postdiv = document.createElement("div");
 	postdiv.id = "postlist";
@@ -134,7 +134,6 @@ function refresh(postdiv) {
 					var img = document.createElement("img");
 					link.target="_blank";
 					img.src = link.href = "/images/" + data[i].image;
-					img.width = 256;
 					$(link).append(img);
 					$(div).append(link);
 				}

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#page").append("<a class='navlink' href='/users'>&lt;</a>");
+	$("#page").append("<a href='/users'>&lt;</a>");
 
 	var form = document.createElement("form");
 	var username = document.createElement("input");
