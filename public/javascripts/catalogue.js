@@ -12,7 +12,6 @@ $(document).ready(function() {
 	subject.type = "text";
 	subject.placeholder = "max 32 characters";
 	anon.type = "checkbox";
-	anon.checked = true;
 	img.type = "file";
 	img.name = "img_upload";
 	button.type = "submit";
