@@ -11,6 +11,7 @@ $(document).ready(function() {
 
 	form.name = "post";
 	subject.type = "text";
+	subject.placeholder = "max 32 characters";
 	anon.type = "checkbox";
 	anon.checked = true;
 	img.type = "file";
@@ -31,19 +32,24 @@ $(document).ready(function() {
 		if(img.files[0] != undefined) {
 			data.append("image", img.files[0]);
 		}
-		$.ajax({
-			url:"/api/posts",
-			type:"POST",
-			data:data,
-			processData:false,
-			contentType:false,
-			success:function() {
-				window.location.assign("/thread/"+thread_id);
-			},
-			error:function() {
-				console.log("Error uploading data to server.");
-			}
-		});
+		if(content.value) {
+			$.ajax({
+				url:"/api/posts",
+				type:"POST",
+				data:data,
+				processData:false,
+				contentType:false,
+				success:function() {
+					window.location.assign("/thread/"+thread_id);
+				},
+				error:function() {
+					console.log("Error uploading data to server.");
+				}
+			});
+		}
+		else alert(
+			"missing information\n" +
+			"content: " + content.value);
 		return false;
 	};
 

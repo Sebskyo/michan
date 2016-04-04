@@ -23,12 +23,16 @@ exports.create = function(data, cb) {
 	}
 	else if(user) {
 		conn.query("insert into threads (id) values (null)", function(err, rows) {
+			console.log("query done");
 			if(!err) {
+				console.log("no errors doing query");
 				thread = rows.insertId;
 				sql = sql.replace(/(?:\()null/, "("+thread);
+				console.log("sql: ", sql);
 				conn.query(sql, function (err, rows) {
+					console.log("post insertion query done");
 					if (!err) cb(null, rows.insertId);
-					else cb(err);
+					else {console.log(err); cb(err);}
 				});
 			}
 			else cb(err);

@@ -10,6 +10,7 @@ $(document).ready(function() {
 
 	form.name = "post";
 	subject.type = "text";
+	subject.placeholder = "max 32 characters";
 	anon.type = "checkbox";
 	anon.checked = true;
 	img.type = "file";
@@ -27,20 +28,31 @@ $(document).ready(function() {
 		data.append("content", content.value);
 		data.append("anon", anon.checked);
 		data.append("image", img.files[0]);
-		console.log(data);
-		$.ajax({
-			url:"/api/posts",
-			type:"POST",
-			data:data,
-			processData:false,
-			contentType:false,
-			success:function() {
-				window.location.assign("/catalogue");
-			},
-			error:function() {
-				console.log("Error uploading data to server.");
-			}
-		});
+		console.log(subject.value);
+		console.log(content.value);
+		if(content.value && subject.value && img.files[0]) {
+			$.ajax({
+				url:"/api/posts",
+				type:"POST",
+				data:data,
+				processData:false,
+				contentType:false,
+				success:function() {
+					window.location.assign("/catalogue");
+				},
+				error:function() {
+					console.log("Error uploading data to server.");
+				}
+			});
+		}
+		else {
+			alert(
+				"missing information\n" +
+				"subject: " + subject.value + "\n" +
+				"content: " + content.value + "\n" +
+				"image: " + !!img.files[0]);
+			window.location.assign("/catalogue");
+		}
 		return false;
 	};
 

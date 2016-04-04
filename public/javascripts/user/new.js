@@ -19,7 +19,9 @@ $(document).ready(function() {
 		return false;
 	};
 	username.type = "text";
+	username.placeholder = "max 16 characters";
 	name.type = "text";
+	name.placeholder = "max 16 characters";
 	password.type = "password";
 	button.type = "submit";
 
