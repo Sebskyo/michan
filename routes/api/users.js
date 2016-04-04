@@ -6,7 +6,7 @@ var model = require("../../models/user");
 router.get("/", function (req, res) {
 	model.readAll(function (err, data) {
 		if (!err) res.send({you: req.session.user, data: data});
-		else res.send("err");
+		else res.status(500).end("An error occurred");
 	});
 });
 // GET specific user data (id, username, name, # of posts, # of threads)
@@ -17,15 +17,14 @@ router.get("/:id", function (req, res) {
 			data.session = session;
 			res.send(data);
 		}
-		else res.send("err");
+		else res.status(500).end("An error occurred");
 	});
 });
 // POST data to create a new user (username, name, password)
 router.post("/", function (req, res) {
 	model.create({username: req.body.username, name: req.body.name, password: req.body.password}, function (err, data) {
 		if (!err) res.send("" + data + "");
-		else res.send("err");
-		res.end("eneded");
+		else res.status(500).end("An error occurred");
 	})
 });
 router.post("/:user", function (req, res) {
@@ -38,9 +37,9 @@ router.post("/:user", function (req, res) {
 					req.session.user_id = data;
 					res.end("logged in");
 				}
-				else res.end("error occurred");
+				else res.status(500).end("An error occurred");
 			});
-		else res.end("error occurred");
+		else res.status(500).end("An error occurred");
 	});
 });
 

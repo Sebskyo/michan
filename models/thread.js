@@ -3,10 +3,8 @@ var conn = require("../db");
 
 exports.create = function(cb) {
 	conn.query("insert into threads default values", function(err, rows) {
-		if(!err)
-			cb(null, rows.insertId);
-		else
-			cb(err);
+		if(!err) cb(null, rows.insertId);
+		else cb(true);
 	});
 };
 
@@ -28,18 +26,16 @@ exports.read = function(cb) {
 					}
 					cb(null, arr);
 				}
-				else cb(err);
+				else cb(true);
 			});
 		}
-		else cb(err);
+		else cb(true);
 	});
 };
 
 exports.delete = function(id, cb) {
 	conn.query("delete from threads where id="+id, function(err) {
-		if(!err)
-			cb(null);
-		else
-			cb(err);
+		if(!err) cb(null);
+		else cb(true);
 	})
 };

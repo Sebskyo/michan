@@ -22,14 +22,14 @@ var upload = multer({
 router.get("/", function(req, res) {
 	model.read(function(err, data) {
 		if(!err) res.send(data);
-		else res.send(err);
+		else res.status(500).end("An error occurred");
 	})
 });
 // GET all posts matching the given thread id
 router.get("/:thread_id", function(req, res) {
 	model.readThread(req.params.thread_id, function(err, data) {
 		if(!err) res.send(data);
-		else res.send(err);
+		else res.status(500).end("An error occurred");
 	})
 });
 // POST data to create a new post linked to a thread (thread_id, user_id, subject, content, )

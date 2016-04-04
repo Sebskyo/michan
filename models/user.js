@@ -8,7 +8,7 @@ exports.create = function(data, cb) {
 	var password = hash.generate(data.password);
 	conn.query("insert into users (username, name, password) values (\""+username+"\", \""+name+"\", \""+password+"\")", function(err, rows) {
 		if(!err) cb(null, rows.insertId);
-		else cb(err);
+		else cb(true);
 	});
 };
 
@@ -22,18 +22,15 @@ exports.read = function(id, cb) {
 					data.count = posts;
 					cb(null, data);
 				}
-				else cb(err);
+				else cb(true);
 			});
 		else cb(true);
 	});
 };
 exports.readAll = function(cb) {
 	conn.query("select id, username, name from users", function(err, rows) {
-		if(!err) {
-			cb(null, rows);
-		}
-		else
-			cb(err);
+		if(!err) cb(null, rows);
+		else cb(true);
 	});
 };
 exports.pwVerify = function(data, cb) {
@@ -43,15 +40,15 @@ exports.pwVerify = function(data, cb) {
 		if(!err && rows[0]) {
 			var stored = rows[0].password;
 			if(hash.verify(password, stored)) cb(null);
-			else cb(err);
+			else cb(true);
 		}
-		else cb(err);
+		else cb(true);
 	});
 };
 exports.getID = function(user, cb) {
 	conn.query("select id from users where username='"+user+"'", function(err, rows) {
 		if(!err && rows[0]) cb(null, rows[0].id);
-		else cb(err);
+		else cb(true);
 	});
 };
 
@@ -69,10 +66,8 @@ exports.update = function(data, cb) {
 		console.log(sql);
 
 		conn.query(sql, function(err) {
-			if(!err)
-				cb(null);
-			else
-				cb(err);
+			if(!err) cb(null);
+			else cb(true);
 		});
 	}
 	else
@@ -84,8 +79,8 @@ exports.delete = function(id, cb) {
 		if(!err)
 			conn.query("delete from users where id="+id, function(err) {
 				if(!err) cb(null);
-				else cb(err);
+				else cb(true);
 		});
-		else cb(err);
+		else cb(true);
 	});
 };

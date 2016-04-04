@@ -18,7 +18,7 @@ exports.create = function(data, cb) {
 	if(thread && user) {
 		conn.query(sql, function(err, rows) {
 			if(!err) cb(null, rows.insertId);
-			else cb(err);
+			else cb(true);
 		});
 	}
 	else if(user) {
@@ -32,21 +32,21 @@ exports.create = function(data, cb) {
 				conn.query(sql, function (err, rows) {
 					console.log("post insertion query done");
 					if (!err) cb(null, rows.insertId);
-					else {console.log(err); cb(err);}
+					else cb(true);
 				});
 			}
-			else cb(err);
+			else cb(true);
 		});
 	}
 	else {
-		cb(1);
+		cb(true);
 	}
 };
 
 exports.read = function(cb) {
 	conn.query("select * from posts", function(err, rows) {
 		if(!err) cb(null, rows);
-		else cb(err);
+		else cb(true);
 	})
 };
 exports.readThread = function(id, cb) {
@@ -57,6 +57,6 @@ exports.readThread = function(id, cb) {
 			}
 			cb(null, rows);
 		}
-		else cb(err);
+		else cb(true);
 	});
 };

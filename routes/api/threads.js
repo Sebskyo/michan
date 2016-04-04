@@ -6,14 +6,14 @@ var model = require("../../models/thread");
 router.get("/", function(req, res) {
 	model.read(function(err, data) {
 		if(!err) res.send(data);
-		else res.send(err);
+		else res.status(500).end("An error occurred");
 	});
 });
 // POST data to create a new thread
 router.post("/", function(req, res) {
 	model.create(function(err, data) {
 		if(!err) res.send(""+data+"");
-		else res.send(err);
+		else res.status(500).end("An error occurred");
 	});
 });
 
