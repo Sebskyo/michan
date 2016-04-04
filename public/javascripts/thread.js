@@ -97,7 +97,7 @@ function refresh(postdiv) {
 				var infodiv = document.createElement("div");
 				infodiv.className = "info";
 
-				if(data[i].user_id != "2" && data[i].user_id != "3") {
+				if(data[i].user_id != "2") {
 					var user = document.createElement("a");
 					user.className = "user";
 					user.href = "/users/"+data[i].user_id;
