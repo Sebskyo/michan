@@ -46,7 +46,7 @@ remember to use the mysql options that apply to you.
 Now to install the node modules, remember that this script runs on version 4, I recommend using nvm
 ```
 nvm use 4
-node install
+npm install
 ```
 and you're good to go! Start the server with
 ```
