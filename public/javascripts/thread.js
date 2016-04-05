@@ -139,11 +139,12 @@ function refresh(postdiv) {
 					var img = document.createElement("img");
 					link.target="_blank";
 					img.src = link.href = "/images/" + data[i].image;
+					img.className = "postimg";
 					$(link).append(img);
 					$(div).append(link);
 				}
 
-				$(div).append(newl(hlnk(lnk(grn(esc(data[i].content))))));
+				$(div).append(newl(emote(hlnk(lnk(grn(esc(data[i].content)))))));
 
 				$(postdiv).append(div);
 			}
@@ -186,12 +187,27 @@ function lnk(str) {
 	return str;
 }
 function hlnk(str) {
-	var arr = str.match(/^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/gm);
+	var arr = str.match(/(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?/gm);
 	if(arr) {
 		for(var i in arr) {
 			var tmp = arr[i].replace("http:", "https:");
 			tmp = "<a href='"+tmp+"'>"+tmp+"</a>";
 			str = str.replace(arr[i], tmp);
+		}
+	}
+	return str;
+}
+function emote(str) {
+	var arr = str.match(/\:\w+\:/gm);
+	console.log(arr);
+	if(arr) {
+		for(var i in arr) {
+			var tmp = arr[i].slice(1, -1);
+			if(emotes.indexOf(tmp) != -1) {
+				console.log("lol");
+				tmp = "<img width='20px' height='20px' src='/images/emote/"+tmp+".png'>";
+				str = str.replace(arr[i], tmp);
+			}
 		}
 	}
 	return str;

@@ -18,7 +18,10 @@ var conf = {
 		profile:"Profile",
 		login:"Login",
 		signup:"Signup"
-	}
+	},
+	emotes:[
+
+	]
 };
 
 module.exports = conf;

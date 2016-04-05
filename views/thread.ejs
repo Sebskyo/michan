@@ -3,6 +3,14 @@
 <head>
 	<title><%=title%></title>
 	<meta charset="UTF-8">
+	<script>
+		var emotes = "<%= emotes %>";
+		console.log(emotes);
+		emotes = emotes.replace(/&#34;/gm, "\"");
+		console.log(emotes);
+		emotes = JSON.parse(emotes);
+		console.log(emotes);
+	</script>
 	<script src="/javascripts/jquery-2.2.1.js"></script>
 	<script src="/javascripts/thread.js"></script>
 	<link href="/favicon.png" type="image/png" rel="icon">

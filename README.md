@@ -24,9 +24,10 @@ then cd to the new dir
 ```
 cd michan
 ```
-create the images directory
+create the necessary directories
 ```
 mkdir ./public/images
+mkdir ./public/images/emote
 ```
 now copy the configuration file and configure it
 ```
@@ -38,7 +39,8 @@ if you're an emacs guy, simply use
 alias emacs=vim
 emacs conf.js
 ```
-now run the sql to create the database, make sure to drop any existing database named "michan"
+the "emotes" section is for any emotes you want on the site, and can be accessed with :emote:, be sure that these images are 20x20 pixels and are png images, you also have to put them in the /public/images/emote folder.
+Now run the sql to create the database, make sure to drop any existing database named "michan"
 ```
 cat michan_create.sql | mysql -u USER -p
 ```

@@ -34,14 +34,14 @@ body {
 .info {
 	margin-bottom: 4px;
 }
-img {
+.postimg {
 	max-width: 128px;
 	max-height: 128px;
 	margin-right: 4px;
 	float: left;
 	transition: max-width 0.2s, max-height 0.2s;
 }
-img:hover {
+.postimg:hover {
 	max-width: 256px;
 	max-height: 256px;
 }
