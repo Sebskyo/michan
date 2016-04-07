@@ -199,12 +199,10 @@ function hlnk(str) {
 }
 function emote(str) {
 	var arr = str.match(/\:\w+\:/gm);
-	console.log(arr);
 	if(arr) {
 		for(var i in arr) {
-			var tmp = arr[i].slice(1, -1);
+			var tmp = arr[i].slice(1, -1).toLowerCase();
 			if(emotes.indexOf(tmp) != -1) {
-				console.log("lol");
 				tmp = "<img width='20px' height='20px' src='/images/emote/"+tmp+".png'>";
 				str = str.replace(arr[i], tmp);
 			}
