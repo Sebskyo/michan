@@ -82,7 +82,7 @@ $(document).ready(function() {
 });
 
 function refresh(postdiv) {
-	$.get("/api/posts/"+thread_id, function(data) {
+	$.get("/api/threads/"+thread_id, function(data) {
 		if(data[0]) {
 			postdiv.innerHTML = "";
 			for(var i = 0; i < data.length; i++) {

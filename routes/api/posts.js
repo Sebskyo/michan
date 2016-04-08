@@ -20,14 +20,14 @@ var upload = multer({
 
 // GET all posts
 router.get("/", function(req, res) {
-	model.read(function(err, data) {
+	model.readAll(function(err, data) {
 		if(!err) res.send(data);
 		else res.status(500).end("An error occurred");
 	})
 });
-// GET all posts matching the given thread id
-router.get("/:thread_id", function(req, res) {
-	model.readThread(req.params.thread_id, function(err, data) {
+// GET specific post
+router.get("/:id", function(req, res) {
+	model.read(req.params.id, function(err, data) {
 		if(!err) res.send(data);
 		else res.status(500).end("An error occurred");
 	});

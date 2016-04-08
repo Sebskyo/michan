@@ -43,20 +43,15 @@ exports.create = function(data, cb) {
 	}
 };
 
-exports.read = function(cb) {
-	conn.query("select * from posts", function(err, rows) {
+exports.read = function(id, cb) {
+	conn.query("select * from posts where id="+id, function(err, rows) {
 		if(!err) cb(null, rows);
 		else cb(true);
 	})
 };
-exports.readThread = function(id, cb) {
-	conn.query("select posts.id, posts.user_id, posts.subject, posts.content, posts.image, posts.date, users.username from posts inner join users on posts.user_id=users.id where thread_id="+id+" order by posts.id", function(err, rows) {
-		if(!err) {
-			for(var i = 0; i < rows.length; i++) {
-				rows[i].date = new Date(rows[i].date.getTime() - offset).toISOString().slice(0, 19).replace("T", " ");
-			}
-			cb(null, rows);
-		}
+exports.readAll = function(cb) {
+	conn.query("select * from posts", function(err, rows) {
+		if(!err) cb(null, rows);
 		else cb(true);
-	});
+	})
 };
