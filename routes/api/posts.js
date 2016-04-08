@@ -7,7 +7,7 @@ var storage = multer.diskStorage({
 		cb(null, "./public/images");
 	},
 	filename: function(req, file, cb) {
-		cb(null, Math.floor(Date.now()) + "." + file.mimetype.replace("image/", ""));
+		cb(null, Date.now() + "." + file.mimetype.replace("image/", ""));
 	}
 });
 var upload = multer({
@@ -30,7 +30,7 @@ router.get("/:thread_id", function(req, res) {
 	model.readThread(req.params.thread_id, function(err, data) {
 		if(!err) res.send(data);
 		else res.status(500).end("An error occurred");
-	})
+	});
 });
 // POST data to create a new post linked to a thread (thread_id, user_id, subject, content, )
 router.post("/", upload.single("image"), function(req, res) {
