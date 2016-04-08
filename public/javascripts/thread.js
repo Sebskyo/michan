@@ -54,9 +54,9 @@ $(document).ready(function() {
 
 	$(button).append("POST");
 	$(form).append("Subject: ");
-	$(form).append(subject);// $(form).append("<br>");
+	$(form).append(subject);
 	$(form).append(anon);
-	$(form).append("Post anonymously? ");// $(form).append("<br>");
+	$(form).append("Post anonymously? ");
 	$(form).append(img); $(form).append("<br>");
 	$(form).append(content); $(form).append("<br>");
 	$(form).append(button);
