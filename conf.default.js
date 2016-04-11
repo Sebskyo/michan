@@ -3,6 +3,7 @@ var conf = {
 		port:3000
 	},
 	database:{
+		connectionLimit:50,
 		host:"localhost",
 		user:"root",
 		password:"password",
