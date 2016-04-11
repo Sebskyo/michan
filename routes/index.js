@@ -12,6 +12,10 @@ router.get("/", function(req, res) {
 router.get("/faq", function(req, res) {
 	res.render("faq", {title:conf.faq});
 });
+router.get("/admin", function(req, res) {
+	if(req.session.user_id == 1) res.render("admin");
+	else res.redirect("/");
+});
 
 router.use("/users", users);
 router.use("/catalogue", catalogue);

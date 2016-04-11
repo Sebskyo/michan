@@ -64,5 +64,15 @@ router.post("/", upload.single("image"), function(req, res) {
 		res.status(400).end("Not logged in");
 	}
 });
+// DELETE a post
+router.delete("/:id", function(req, res) {
+	if(req.session.user_id == 1) {
+		model.delete(req.params.id, function(err) {
+			if(!err) res.end("Success");
+			else res.status(500).end("An error occurred");
+		});
+	}
+	else res.status(403).end("Forbidden");
+});
 
 module.exports = router;

@@ -90,3 +90,18 @@ exports.readAll = function(cb) {
 		});
 	});
 };
+
+exports.delete = function(id, cb) {
+	db(function(perr, conn) {
+		if(perr) {
+			conn.release();
+			cb(true);
+			return;
+		}
+		conn.query("delete from posts where id="+id, function(err, rows) {
+			conn.release();
+			if(!err) cb(null);
+			else cb(true);
+		});
+	});
+};
