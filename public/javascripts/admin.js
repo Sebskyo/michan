@@ -1,4 +1,7 @@
+/* THE ADMIN PAGE IS INACCESSIBLE BY USERS, REDIRECTION IS HANDLED BY ROUTER */
+/* ANYONE CAN STILL GET THIS JAVASCRIPT AND USE IT TO BUILD THE SITE, BUT ACTIONS ARE STILL ONLY ALLOWED BY USER 1 */
 $(document).ready(function() {
+	// Create form
 	var form = document.createElement("form");
 	var input = document.createElement("input");
 	var modelist = document.createElement("select");
@@ -14,6 +17,7 @@ $(document).ready(function() {
 	button.type = "submit";
 	button.innerHTML = "SEND";
 
+	// Form submit definition
 	form.onsubmit = function() {
 		if(!(input.value)) return false;
 
@@ -35,6 +39,8 @@ $(document).ready(function() {
 
 		return false;
 	};
+
+	// Add it all to the page
 
 	$(modelist).append(mode_post);
 	$(modelist).append(mode_thread);

@@ -1,12 +1,21 @@
 $(document).ready(function() {
 	$("#page").append("<a href='/users'>&lt;</a>");
 
+	// Construct form
 	var form = document.createElement("form");
 	var username = document.createElement("input");
 	var name = document.createElement("input");
 	var password = document.createElement("input");
 	var button = document.createElement("button");
 
+	username.type = "text";
+	username.placeholder = "max 16 characters";
+	name.type = "text";
+	name.placeholder = "max 16 characters";
+	password.type = "password";
+	button.type = "submit";
+
+	// Form submit definition
 	form.onsubmit = function() {
 		var data = {
 			username: username.value.toLowerCase(),
@@ -18,13 +27,8 @@ $(document).ready(function() {
 		});
 		return false;
 	};
-	username.type = "text";
-	username.placeholder = "max 16 characters";
-	name.type = "text";
-	name.placeholder = "max 16 characters";
-	password.type = "password";
-	button.type = "submit";
 
+	// Add it all to the page
 	$(button).append("SIGN UP");
 	$(form).append("username<br>");
 	$(form).append(username);

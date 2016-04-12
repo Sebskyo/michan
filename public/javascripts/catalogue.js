@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	$("#page").append("<a href='/'>&lt; back</a>");
 
+	// Construct form
 	var form = document.createElement("form");
 	var subject = document.createElement("input");
 	var content = document.createElement("textarea");
@@ -21,7 +22,9 @@ $(document).ready(function() {
 	content.rows = 5;
 	content.wrap = "hard";
 
+	// Form submit definition
 	form.onsubmit = function() {
+		// Create data payload
 		var data = new FormData();
 		data.append("subject", subject.value);
 		data.append("content", content.value);
@@ -29,7 +32,9 @@ $(document).ready(function() {
 		data.append("image", img.files[0]);
 		console.log(subject.value);
 		console.log(content.value);
+		// Sanity checks
 		if(content.value && subject.value && img.files[0]) {
+			// Actual POST request is sent
 			$.ajax({
 				url:"/api/posts",
 				type:"POST",
@@ -55,6 +60,7 @@ $(document).ready(function() {
 		return false;
 	};
 
+	// Add form to page
 	$(button).append("POST");
 	$(form).append("Subject: ");
 	$(form).append(subject);
@@ -68,6 +74,7 @@ $(document).ready(function() {
 
 	$("#page").append("<hr style='width: 1056px; float: left;'>");
 
+	// Getting threads and constructing the catalogue
 	$.get("/api/threads", function(data) {
 		var list = document.createElement("div");
 		list.id = "list";
@@ -91,6 +98,7 @@ $(document).ready(function() {
 	});
 });
 
+// Escapes HTML characters
 function esc(str) {
 	return str
 		.replace(/&/g, "&amp;")

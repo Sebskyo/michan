@@ -4,8 +4,11 @@ $(document).ready(function() {
 	var menu = document.createElement("div");
 	menu.className = "menu";
 
+	// Getting data needed for constructing list of users
 	$.get("/api/users", function(data) {
+		// If logged in
 		if(data.you) {
+			// Constructing link to user's page
 			var you = data.you;
 			var youlnk = document.createElement("a");
 			var youdiv = document.createElement("div");
@@ -14,6 +17,7 @@ $(document).ready(function() {
 			youdiv.innerHTML = you;
 			$(youlnk).append(youdiv);
 
+			// Constructing link to logout
 			var outlnk = document.createElement("a");
 			var outdiv = document.createElement("div");
 			outlnk.href = "/users/logout";
@@ -21,10 +25,13 @@ $(document).ready(function() {
 			outdiv.innerHTML = "logout";
 			$(outlnk).append(outdiv);
 
+			// Appending the links
 			$(menu).append(youlnk);
 			$(menu).append(outlnk);
 		}
+		// If not logged in
 		else {
+			// Constructing link to login page
 			var inlnk = document.createElement("a");
 			var indiv = document.createElement("div");
 			inlnk.href = "/users/login";
@@ -32,6 +39,7 @@ $(document).ready(function() {
 			indiv.innerHTML = "login";
 			$(inlnk).append(indiv);
 
+			// Constructing link to sign up page
 			var uplnk = document.createElement("a");
 			var updiv = document.createElement("div");
 			uplnk.href = "/users/signup";
@@ -39,12 +47,14 @@ $(document).ready(function() {
 			updiv.innerHTML = "signup";
 			$(uplnk).append(updiv);
 
+			// Appending the links
 			$(menu).append(inlnk);
 			$(menu).append(uplnk);
 		}
 
-		$("#page").append(menu);
+		$("#page").append(menu); // Add menu to page
 
+		// Construct list
 		data = data.data;
 		var list = document.createElement("div");
 		list.id = "userlist";
@@ -60,10 +70,11 @@ $(document).ready(function() {
 				$(list).append(user);
 			}
 		}
-		$("#page").append(list);
+		$("#page").append(list); // Add list to page
 	});
 });
 
+// Escapes HTML characters
 function esc(str) {
 	return str
 		.replace(/&/g, "&amp;")
@@ -72,9 +83,9 @@ function esc(str) {
 		.replace(/"/g, "&quot;")
 		.replace(/'/g, "&apos;");
 }
+// Finds user id of logged in user
 function findID(arr, usr) {
-	for(var i in arr) {
+	for(var i in arr)
 		if(arr[i].username == usr) return arr[i].id;
-	}
 	return false;
 }

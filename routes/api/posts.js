@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var model = require("../../models/post");
 var multer = require("multer");
+// Define storage of images
 var storage = multer.diskStorage({
 	destination: function(req, file, cb) {
 		cb(null, "./public/images");
@@ -12,11 +13,13 @@ var storage = multer.diskStorage({
 });
 var upload = multer({
 	storage: storage,
+	// Define limits of images
 	limits:{fileSize:5243000, files:1},
 	fileFilter:function(req, file, cb) {
 		if(file.mimetype.startsWith("image/")) cb(null, true);
 		else cb(null, false);
-	}});
+	}
+});
 
 // GET all posts
 router.get("/", function(req, res) {
@@ -32,7 +35,8 @@ router.get("/:id", function(req, res) {
 		else res.status(500).end("An error occurred");
 	});
 });
-// POST data to create a new post linked to a thread (thread_id, user_id, subject, content, )
+
+// POST data to create a new post, model handles creation of thread if no thread id is given
 router.post("/", upload.single("image"), function(req, res) {
 	if(req.session.user_id) {
 		var data = {
@@ -64,6 +68,7 @@ router.post("/", upload.single("image"), function(req, res) {
 		res.status(400).end("Not logged in");
 	}
 });
+
 // DELETE a post
 router.delete("/:id", function(req, res) {
 	if(req.session.user_id == 1) {

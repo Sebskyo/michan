@@ -1,3 +1,4 @@
+/* CONSTRUCT MAIN PAGE */
 $(document).ready(function() {
 	var logo = document.createElement("div");
 	var logoimg = document.createElement("img");

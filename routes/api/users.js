@@ -2,14 +2,14 @@ var express = require("express");
 var router = express.Router();
 var model = require("../../models/user");
 
-// GET all users (id, username, name)
+// GET all users
 router.get("/", function (req, res) {
 	model.readAll(function (err, data) {
 		if (!err) res.send({you: req.session.user, data: data});
 		else res.status(500).end("An error occurred");
 	});
 });
-// GET specific user data (id, username, name, # of posts, # of threads)
+// GET specific user data including no. of posts
 router.get("/:id", function (req, res) {
 	model.read(req.params.id, function (err, data) {
 		var session = req.session.user_id ? true : false;
@@ -20,6 +20,7 @@ router.get("/:id", function (req, res) {
 		else res.status(500).end("An error occurred");
 	});
 });
+
 // POST data to create a new user (username, name, password)
 router.post("/", function (req, res) {
 	model.create({username: req.body.username, name: req.body.name, password: req.body.password}, function (err, data) {
@@ -27,6 +28,7 @@ router.post("/", function (req, res) {
 		else res.status(500).end("An error occurred");
 	})
 });
+// POST data required to login, also set session data
 router.post("/:user", function (req, res) {
 	req.params.user = req.params.user.toLowerCase();
 	model.getID(req.params.user, function (err, data) {
@@ -43,33 +45,6 @@ router.post("/:user", function (req, res) {
 	});
 });
 
-// Not enough time to implement
-/*// PUT new data into a specific user (username, name, password)
-router.put("/", function (req, res) {
-	if(req.session.user_id) {
-		model.update({
-			id: req.session.user_id,
-			username: req.body.username,
-			password: req.body.password
-		}, function (err) {
-			if (!err) res.send("success!");
-			else res.send("err");
-		});
-	}
-});
-// DELETE a user
-router.delete("/", function (req, res) {
-	if(req.session.user_id) {
-		model.delete(req.session.user_id, function (err) {
-			if (!err) {
-				req.session.user_id = null;
-				req.session.user = null;
-				res.send("success!");
-			}
-			else res.send("err");
-		});
-	}
-});
-*/
+// There was not enough time to implement updating/deleting users
 
 module.exports = router;

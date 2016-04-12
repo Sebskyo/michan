@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	$("#page").append("<a href='/users'>&lt;</a><br>");
 
+	// Construct form
 	var form = document.createElement("form");
 	var username = document.createElement("input");
 	var password = document.createElement("input");
@@ -10,6 +11,7 @@ $(document).ready(function() {
 	password.type = "password";
 	button.type = "submit";
 
+	// Form submit definition
 	form.onsubmit = function() {
 		var data = {password: password.value};
 		$.post("/api/users/"+username.value, data, function() {
@@ -18,6 +20,7 @@ $(document).ready(function() {
 		return false;
 	};
 
+	// Add it all to the page
 	$(button).append("LOGIN");
 	$(form).append("username<br>");
 	$(form).append(username);

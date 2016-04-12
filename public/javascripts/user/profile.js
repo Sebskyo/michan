@@ -1,4 +1,5 @@
 var reg, id;
+// Finding id and making sure it's valid (ie. it's a number)
 if(reg = /\/\d+/.exec(window.location.pathname)) {
 	console.log(reg);
 	id = parseInt(reg[0].substr(1), 10);
@@ -9,6 +10,8 @@ else window.location.assign("/users");
 
 $(document).ready(function() {
 	$("#page").append("<a href='/users'>&lt; back</a>");
+
+	// GET request to get information of user and construct the page
 	$.get("/api/users/"+id, function(data) {
 		if(data.id && data.id != 2) {
 			var count = data.count;

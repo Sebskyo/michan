@@ -1,3 +1,5 @@
+/* PARTS OF THIS FILE WERE AUTOMATICALLY GENERATED */
+
 var express = require("express");
 var path = require("path");
 var logger = require("morgan");

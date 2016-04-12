@@ -2,7 +2,9 @@ var express = require("express");
 var db = require("../db");
 var hash = require("password-hash");
 
+// Creating a user
 exports.create = function(data, cb) {
+	// Needed variables
 	var username = data.username;
 	var name = data.name;
 	var password = hash.generate(data.password);
@@ -12,6 +14,7 @@ exports.create = function(data, cb) {
 			cb(true);
 			return;
 		}
+		// Insert into users with needed data
 		conn.query("insert into users (username, name, password) values (\""+username+"\", \""+name+"\", \""+password+"\")", function(err, rows) {
 			conn.release();
 			if(!err) cb(null, rows.insertId);
@@ -20,6 +23,7 @@ exports.create = function(data, cb) {
 	});
 };
 
+// Getting information about a specific user
 exports.read = function(id, cb) {
 	db(function(perr, conn) {
 		if(perr) {
@@ -27,8 +31,10 @@ exports.read = function(id, cb) {
 			cb(true);
 			return;
 		}
+		// Select information in the user table, except password
 		conn.query("select id, username, name from users where id="+id, function(err, rows) {
 			if(!err && rows[0] != undefined)
+				// Get number of posts this user has created (excludes anonymous posts)
 				conn.query("select id from posts where user_id="+id, function(err, count) {
 					conn.release();
 					if(!err) {
@@ -46,6 +52,7 @@ exports.read = function(id, cb) {
 		});
 	});
 };
+// Getting information about all users
 exports.readAll = function(cb) {
 	db(function(perr, conn) {
 		if(perr) {
@@ -53,6 +60,7 @@ exports.readAll = function(cb) {
 			cb(true);
 			return;
 		}
+		// Select information in the user table, except password
 		conn.query("select id, username, name from users", function(err, rows) {
 			conn.release();
 			if(!err) cb(null, rows);
@@ -60,6 +68,7 @@ exports.readAll = function(cb) {
 		});
 	});
 };
+// Password verification
 exports.pwVerify = function(data, cb) {
 	var user = data.user;
 	var password = data.password;
@@ -69,9 +78,11 @@ exports.pwVerify = function(data, cb) {
 			cb(true);
 			return;
 		}
+		// Select password
 		conn.query("select password from users where username='"+user+"'", function(err, rows) {
 			conn.release();
 			if(!err && rows[0]) {
+				// Verifying password
 				var stored = rows[0].password;
 				if(hash.verify(password, stored)) cb(null);
 				else cb(true);
@@ -80,6 +91,7 @@ exports.pwVerify = function(data, cb) {
 		});
 	});
 };
+// Getting just the ID for a given username
 exports.getID = function(user, cb) {
 	db(function(perr, conn) {
 		if(perr) {
@@ -87,6 +99,7 @@ exports.getID = function(user, cb) {
 			cb(true);
 			return;
 		}
+		// Select id matching given username
 		conn.query("select id from users where username='"+user+"'", function(err, rows) {
 			conn.release();
 			if(!err && rows[0]) cb(null, rows[0].id);
@@ -95,54 +108,4 @@ exports.getID = function(user, cb) {
 	});
 };
 
-exports.update = function(data, cb) {
-	var id = data.id;
-	var username = data.username;
-	if(data.password) var password = hash.generate(data.password);
-
-	if(!(!username && !name && !password)) {
-		var sql = "";
-		if(!!username) sql += "username=\""+username+"\",";
-		if(!!password) sql += "password=\""+password+"\",";
-		sql = sql.slice(0,-1);
-		sql = "update users set " + sql + " where id="+id;
-		console.log(sql);
-
-		db(function(perr, conn) {
-			if(perr) {
-				conn.release();
-				cb(true);
-				return;
-			}
-			conn.query(sql, function(err) {
-				conn.release();
-				if(!err) cb(null);
-				else cb(true);
-			});
-		});
-	}
-	else
-		cb(true);
-};
-
-exports.delete = function(id, cb) {
-	db(function(perr, conn) {
-		if(perr) {
-			conn.release();
-			cb(true);
-			return;
-		}
-		conn.query("update set user_id=3 where user_id="+id, function(err) {
-			if(!err)
-				conn.query("delete from users where id="+id, function(err) {
-					conn.release();
-					if(!err) cb(null);
-					else cb(true);
-				});
-			else {
-				conn.release();
-				cb(true);
-			}
-		});
-	});
-};
+// There was not enough time to implement updating/deleting users

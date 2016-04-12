@@ -7,7 +7,7 @@ var posts = require("./posts");
 
 router.get("/", function(req, res) {
 	res.send("API root");
-})
+});
 
 router.use("/users", users);
 router.use("/threads", threads);
