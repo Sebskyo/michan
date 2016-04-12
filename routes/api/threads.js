@@ -17,14 +17,6 @@ router.get("/:id", function(req, res) {
 	});
 });
 
-// POST data to create a new thread
-router.post("/", function(req, res) {
-	model.create(function(err, data) {
-		if(!err) res.send(""+data+"");
-		else res.status(500).end("An error occurred");
-	});
-});
-
 // DELETE a thread and its posts
 router.delete("/:id", function(req, res) {
 	if(req.session.user_id == 1) {
