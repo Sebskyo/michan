@@ -1,6 +1,9 @@
+# IDE folder
 .idea
+# Don't want packages cluttering up the repo
 node_modules/*
+# Server specific stuff
 public/images/*
-# template for conf.js will come later
+# Template is conf.default.js - copy this to conf.js
 conf.js
 
